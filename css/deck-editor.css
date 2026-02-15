@@ -1,0 +1,422 @@
+/* ===========================
+   Liga Enhanced - Deck Editor
+   =========================== */
+
+/* Edit Button (in deck header) */
+.le-dk-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 10px;
+  padding: 4px 14px;
+  background: #ff6a10;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+
+.le-dk-edit-btn:hover {
+  background: #e05500;
+}
+
+/* Per-Section Search Bar (inline within deck content) */
+.le-dk-section-search {
+  position: relative;
+  padding: 6px 10px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.le-dk-search-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.le-dk-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.le-dk-search-input:focus {
+  border-color: #ff6a10;
+}
+
+/* Edition select in search bar */
+.le-dk-edition-select {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: inherit;
+  background: #fff;
+  max-width: 220px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.le-dk-edition-select:focus {
+  border-color: #ff6a10;
+}
+
+.le-dk-edition-select:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Add button in search bar */
+.le-dk-add-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 5px;
+  background: #ff6a10;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.le-dk-add-btn:hover {
+  background: #e05500;
+}
+
+/* Autocomplete Dropdown */
+.le-dk-suggestions {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+}
+
+/* Injected Section Headers (Sideboard/Maybeboard when missing) */
+.le-dk-injected-header {
+  margin-top: 8px;
+}
+
+.le-dk-suggestion {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.1s;
+}
+
+.le-dk-suggestion:last-child {
+  border-bottom: none;
+}
+
+.le-dk-suggestion:hover,
+.le-dk-suggestion.le-dk-suggestion-active {
+  background: #fff5f0;
+}
+
+/* Inline Controls */
+.le-dk-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.le-dk-btn {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  font-family: inherit;
+  transition: all 0.1s;
+}
+
+.le-dk-btn:hover {
+  border-color: #ff6a10;
+  color: #ff6a10;
+}
+
+.le-dk-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.le-dk-btn.le-dk-remove {
+  margin-left: 3px;
+  color: #c00;
+  border-color: transparent;
+  background: transparent;
+}
+
+.le-dk-btn.le-dk-remove:hover {
+  color: #f00;
+  background: #fff0f0;
+}
+
+.le-dk-qty-val {
+  min-width: 20px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Card States */
+.le-dk-removed {
+  position: relative;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.le-dk-removed .le-dk-controls {
+  pointer-events: auto;
+}
+
+.le-dk-removed .le-dk-btn.le-dk-remove {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.le-dk-changed .le-dk-qty-val {
+  color: #ff6a10;
+}
+
+/* Undo button on removed cards */
+.le-dk-undo-btn {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2px 10px;
+  border: 1px solid #ff6a10;
+  border-radius: 4px;
+  background: #fff;
+  color: #ff6a10;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  pointer-events: auto;
+  opacity: 1;
+  z-index: 1;
+}
+
+.le-dk-undo-btn:hover {
+  background: #ff6a10;
+  color: #fff;
+}
+
+/* Added Cards Section */
+.le-dk-added-header {
+  padding: 6px 10px;
+  background: #fff5f0;
+  border-top: 2px solid #ff6a10;
+  border-bottom: 1px solid #ffe0cc;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff6a10;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+
+.le-dk-added-line {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #fffaf7;
+  border-bottom: 1px solid #f5f0ec;
+  font-size: 13px;
+}
+
+.le-dk-added-line:last-child {
+  border-bottom: none;
+}
+
+a.le-dk-added-name,
+.le-dk-added-name {
+  flex: 1;
+  color: #444;
+  padding: 2px 0;
+  text-decoration: none;
+}
+
+a.le-dk-added-name:hover {
+  color: #ff6a10;
+  text-decoration: underline;
+}
+
+/* Edition name on added cards */
+.le-dk-edition-name-text {
+  margin-left: 6px;
+  font-size: 11px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+/* Save Bar */
+.le-dk-save-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #fff;
+  border-top: 2px solid #ff6a10;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  z-index: 10000;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.le-dk-changes {
+  flex: 1;
+  color: #888;
+}
+
+.le-dk-cancel {
+  padding: 8px 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  color: #666;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.le-dk-cancel:hover {
+  border-color: #999;
+  color: #333;
+}
+
+.le-dk-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.le-dk-save {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 6px;
+  background: #ff6a10;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.le-dk-save:hover {
+  background: #e05500;
+}
+
+.le-dk-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Disabled view tabs during edit */
+.le-dk-tabs-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Clickable edition icon (edit mode) */
+.le-dk-edi-clickable {
+  cursor: pointer;
+  border-radius: 3px;
+  outline: 2px dashed #ccc;
+  transition: outline 0.15s;
+}
+
+.le-dk-edi-clickable:hover {
+  outline: 2px solid #ff6a10;
+}
+
+/* Placeholder for cards without edition */
+.le-dk-edi-placeholder {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border: 1px dashed #ccc;
+  border-radius: 3px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.le-dk-edi-clickable .le-dk-edi-placeholder:hover {
+  border-color: #ff6a10;
+}
+
+/* Edition dropdown (floating) */
+.le-dk-edition-dropdown {
+  position: absolute;
+  z-index: 10001;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  max-height: 240px;
+  overflow-y: auto;
+  min-width: 180px;
+  max-width: 280px;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.le-dk-edition-option {
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.le-dk-edition-option:hover {
+  background: #fff5f0;
+}
+
+.le-dk-edition-option-current {
+  font-weight: 600;
+  color: #ff6a10;
+}
+

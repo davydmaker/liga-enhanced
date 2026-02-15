@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Liga Enhanced",
+  "short_name": "LigaEnh",
+  "version": "1.0.0",
+  "description": "Your LigaMagic experience, enhanced. Redesigned filters, inline deck editor, and more to come.",
+  "author": "davydmaker",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.ligamagic.com.br/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.ligamagic.com.br/*"
+      ],
+      "css": [
+        "css/enhanced-filters.css",
+        "css/deck-editor.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.ligamagic.com.br/*"
+      ],
+      "js": [
+        "js/features/filter-constants.js",
+        "js/features/filter-core.js",
+        "js/features/filter-edc.js",
+        "js/features/filter-mpcard.js",
+        "js/features/filter-bzr.js",
+        "js/features/filter-showcase.js",
+        "js/features/deck-editor.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Liga Enhanced",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

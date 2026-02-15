@@ -1,0 +1,506 @@
+/* ===========================
+   Liga Enhanced - Floating Filter Panel
+   =========================== */
+
+/* Floating Action Button */
+#le-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: #ff6a10;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 106, 16, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+#le-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(255, 106, 16, 0.5);
+}
+
+#le-fab.le-fab-active {
+  background: #333;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Backdrop */
+#le-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+#le-backdrop.le-backdrop-show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Panel */
+#le-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100001;
+  width: 340px;
+  max-width: 90vw;
+  background: #fff;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+#le-panel.le-panel-open {
+  transform: translateX(0);
+}
+
+/* Panel Header */
+.le-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.le-panel-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+}
+
+#le-panel-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+#le-panel-close:hover {
+  color: #333;
+}
+
+/* Panel Body */
+.le-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+/* Input */
+.le-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f8f8f8;
+  color: #333;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.le-input:focus {
+  border-color: #ff6a10;
+  background: #fff;
+}
+
+.le-input::placeholder {
+  color: #aaa;
+}
+
+.le-input-sm {
+  padding: 7px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* Active Filters Bar */
+.le-active-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 12px 0;
+}
+
+.le-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #ff6a10;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.le-tag:hover {
+  background: #e05500;
+}
+
+/* Results Bar */
+.le-results-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  font-size: 12px;
+  color: #888;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 12px;
+}
+
+#le-results-count {
+  font-weight: 700;
+  color: #ff6a10;
+  font-size: 14px;
+}
+
+.le-clear-btn {
+  margin-left: auto;
+  padding: 4px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  color: #666;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.le-clear-btn:hover {
+  border-color: #ff6a10;
+  color: #ff6a10;
+}
+
+/* Section */
+.le-section {
+  margin-bottom: 16px;
+}
+
+.le-section-title {
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #888;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.le-section-badge {
+  background: #ff6a10;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.le-section-badge:empty {
+  display: none;
+}
+
+/* Chips */
+.le-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.le-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  background: #fff;
+  color: #555;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.le-chip:hover {
+  border-color: #ff6a10;
+  background: #fff5f0;
+}
+
+.le-chip-on {
+  border-color: #ff6a10;
+  background: #ff6a10;
+  color: #fff;
+}
+
+.le-chip-on:hover {
+  background: #e05500;
+  border-color: #e05500;
+}
+
+.le-chip-zero {
+  opacity: 0.3;
+}
+
+.le-chip-text {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.le-chip-qty {
+  font-size: 10px;
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.le-chip-on .le-chip-qty {
+  opacity: 0.8;
+}
+
+/* Star Rating */
+.le-stars {
+  letter-spacing: 1px;
+  font-size: 13px;
+  color: #f5a623;
+}
+
+.le-chip-on .le-stars {
+  color: #fff;
+}
+
+/* Color Dot */
+.le-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.le-chip-on .le-dot {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mana Symbol Icons */
+.le-mana-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
+  transition: filter 0.15s;
+}
+
+.le-chip-on .le-mana-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) brightness(1.1);
+}
+
+/* Mana Cost */
+.le-mana-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.le-mana-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  min-width: 40px;
+}
+
+.le-mana-btn:hover {
+  border-color: #ff6a10;
+  background: #fff5f0;
+}
+
+.le-mana-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #555;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid #ddd;
+  transition: all 0.15s;
+}
+
+.le-mana-qty {
+  font-size: 10px;
+  color: #999;
+}
+
+.le-mana-on {
+  border-color: #ff6a10;
+  background: #fff5f0;
+}
+
+.le-mana-on .le-mana-circle {
+  background: #ff6a10;
+  color: #fff;
+  border-color: #ff6a10;
+}
+
+.le-mana-zero {
+  opacity: 0.3;
+}
+
+/* Artist List */
+.le-artist-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.le-artist-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-size: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.le-artist-row:last-child {
+  border-bottom: none;
+}
+
+.le-artist-row:hover {
+  background: #fff5f0;
+}
+
+.le-cb {
+  accent-color: #ff6a10;
+  margin: 0;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.le-artist-name {
+  flex: 1;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.le-artist-qty {
+  font-size: 10px;
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+.le-artist-zero {
+  opacity: 0.35;
+}
+
+/* Price Range */
+.le-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.le-price-input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.le-price-sep {
+  color: #999;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Group Titles */
+.le-group-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+  margin: 16px 0 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.le-group-title:first-child {
+  margin-top: 0;
+}
+
+/* Scrollbar */
+.le-panel-body::-webkit-scrollbar,
+.le-artist-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.le-panel-body::-webkit-scrollbar-track,
+.le-artist-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.le-panel-body::-webkit-scrollbar-thumb,
+.le-artist-list::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.le-panel-body::-webkit-scrollbar-thumb:hover,
+.le-artist-list::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
