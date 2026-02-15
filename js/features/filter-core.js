@@ -173,15 +173,19 @@
 
     const check = () => {
       attempts++;
+      let pending = modules.length === 0;
       for (const mod of modules) {
+        if (mod._leReady) continue;
         try {
           if (mod.canHandle()) {
+            mod._leReady = true;
             try { mod.init(); } catch (e) { /* ignore */ }
-            return;
+          } else {
+            pending = true;
           }
-        } catch (e) { /* ignore */ }
+        } catch (e) { pending = true; }
       }
-      if (attempts < max) setTimeout(check, 200);
+      if (pending && attempts < max) setTimeout(check, 200);
     };
 
     check();

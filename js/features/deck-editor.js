@@ -201,6 +201,7 @@
     }
 
     editing = true;
+    activeViewEl.classList.add('le-dk-editing');
     editedCards = parseDeckFromDOM();
     addedCards = [];
     injectEditControls();
@@ -247,6 +248,7 @@
     });
 
     if (activeViewEl) {
+      activeViewEl.classList.remove('le-dk-editing');
       activeViewEl.querySelectorAll(
         '.le-dk-section-search, .le-dk-added-line, .le-dk-added-header, .le-dk-injected-header'
       ).forEach(function (el) { el.remove(); });
