@@ -1,7 +1,7 @@
 // Liga Enhanced - Filter Constants
 // Maps, icons, and reference data shared across filter modules
 (function () {
-  'use strict';
+  "use strict";
 
   window.LigaEnhanced = window.LigaEnhanced || {};
 
@@ -9,25 +9,57 @@
     // ─── EDC Card Field Maps ───
 
     RARITY_MAP: {
-      1: 'Comum', 2: 'Incomum', 3: 'Rara', 4: 'Mítica',
-      5: 'Especial', 6: 'Token', 7: 'Dicas', 8: 'Fenômenos',
-      9: 'Planos', 10: 'Esquema', 11: 'Emblema', 12: 'Experiência', 13: 'Art Card'
+      1: "Comum",
+      2: "Incomum",
+      3: "Rara",
+      4: "Mítica",
+      5: "Especial",
+      6: "Token",
+      7: "Dicas",
+      8: "Fenômenos",
+      9: "Planos",
+      10: "Esquema",
+      11: "Emblema",
+      12: "Experiência",
+      13: "Art Card",
     },
 
     COLOR_MAP: {
-      2: 'Preto', 3: 'Verde', 4: 'Terreno', 5: 'Multicolorido',
-      6: 'Vermelho', 7: 'Azul', 8: 'Branco', 9: 'Incolor', 10: 'Sem Def.'
+      2: "Preto",
+      3: "Verde",
+      4: "Terreno",
+      5: "Multicolorido",
+      6: "Vermelho",
+      7: "Azul",
+      8: "Branco",
+      9: "Incolor",
+      10: "Sem Def.",
     },
 
     TYPE_MAP: {
-      1: 'Criatura', 2: 'Planeswalker', 3: 'Encantamento', 4: 'Artefato',
-      5: 'Instantânea', 6: 'Feitiço', 7: 'Terreno', 8: 'Terreno Básico',
-      9: 'Tribal', 21: 'Criatura', 26: 'Batalha'
+      1: "Criatura",
+      2: "Planeswalker",
+      3: "Encantamento",
+      4: "Artefato",
+      5: "Instantânea",
+      6: "Feitiço",
+      7: "Terreno",
+      8: "Terreno Básico",
+      9: "Tribal",
+      21: "Criatura",
+      26: "Batalha",
     },
 
     COLOR_HEX: {
-      2: '#a48bb5', 3: '#00a651', 4: '#c4a55c', 5: '#cfb53b',
-      6: '#e03c31', 7: '#0e68ab', 8: '#f8f4e8', 9: '#c0c0c0', 10: '#888'
+      2: "#a48bb5",
+      3: "#00a651",
+      4: "#c4a55c",
+      5: "#cfb53b",
+      6: "#e03c31",
+      7: "#0e68ab",
+      8: "#f8f4e8",
+      9: "#c0c0c0",
+      10: "#888",
     },
 
     // MTG mana symbols as inline SVGs
@@ -49,26 +81,50 @@
       // Land - Mountain silhouette
       4: '<svg class="le-mana-icon" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#d8ccb0"/><circle cx="50" cy="50" r="44" fill="#c8b898"/><path d="M18 72L38 32 50 48 62 28 82 72z" fill="#1a1a1a"/></svg>',
       // Unknown
-      10: '<svg class="le-mana-icon" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#ddd"/><circle cx="50" cy="50" r="44" fill="#ccc"/><text x="50" y="62" text-anchor="middle" font-size="40" font-weight="bold" fill="#666">?</text></svg>'
+      10: '<svg class="le-mana-icon" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#ddd"/><circle cx="50" cy="50" r="44" fill="#ccc"/><text x="50" y="62" text-anchor="middle" font-size="40" font-weight="bold" fill="#666">?</text></svg>',
     },
 
     // ─── Quality Labels ───
 
     QUALITY_LABELS: {
-      1: '(M) Nova', 2: '(NM) Praticamente Nova', 3: '(SP) Usada Levemente',
-      4: '(MP) Usada Moderadamente', 5: '(HP) Muito Usada', 6: '(D) Danificada'
+      1: "(M) Nova",
+      2: "(NM) Praticamente Nova",
+      3: "(SP) Usada Levemente",
+      4: "(MP) Usada Moderadamente",
+      5: "(HP) Muito Usada",
+      6: "(D) Danificada",
     },
 
     // ─── Brazilian States ───
 
     UF_NAMES: {
-      AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia',
-      CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás',
-      MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais',
-      PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí',
-      RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul',
-      RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo',
-      SE: 'Sergipe', TO: 'Tocantins'
-    }
+      AC: "Acre",
+      AL: "Alagoas",
+      AP: "Amapá",
+      AM: "Amazonas",
+      BA: "Bahia",
+      CE: "Ceará",
+      DF: "Distrito Federal",
+      ES: "Espírito Santo",
+      GO: "Goiás",
+      MA: "Maranhão",
+      MT: "Mato Grosso",
+      MS: "Mato Grosso do Sul",
+      MG: "Minas Gerais",
+      PA: "Pará",
+      PB: "Paraíba",
+      PR: "Paraná",
+      PE: "Pernambuco",
+      PI: "Piauí",
+      RJ: "Rio de Janeiro",
+      RN: "Rio Grande do Norte",
+      RS: "Rio Grande do Sul",
+      RO: "Rondônia",
+      RR: "Roraima",
+      SC: "Santa Catarina",
+      SP: "São Paulo",
+      SE: "Sergipe",
+      TO: "Tocantins",
+    },
   };
 })();

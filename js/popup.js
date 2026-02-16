@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const subtitleEl = document.getElementById('currentSite');
-  const banner = document.getElementById('banner');
-  const features = document.getElementById('features');
+document.addEventListener("DOMContentLoaded", async () => {
+  const subtitleEl = document.getElementById("currentSite");
+  const banner = document.getElementById("banner");
+  const features = document.getElementById("features");
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   let isSupportedSite = false;
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (tab?.url) {
     try {
       const hostname = new URL(tab.url).hostname;
-      const site = LigaEnhancedConfig.SITES.find(s => s.domain === hostname);
+      const site = LigaEnhancedConfig.SITES.find((s) => s.domain === hostname);
       if (site) {
         subtitleEl.textContent = site.name;
         isSupportedSite = true;
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (!isSupportedSite) {
-    banner.style.display = '';
-    features.style.display = 'none';
+    banner.style.display = "";
+    features.style.display = "none";
   }
 });

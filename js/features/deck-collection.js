@@ -454,8 +454,7 @@
         var banner = document.getElementById("le-col-banner");
         if (banner) {
           banner.className = "le-col-banner le-col-error";
-          banner.innerHTML =
-            '<span>Erro ao carregar cole\u00e7\u00e3o</span>';
+          banner.innerHTML = "<span>Erro ao carregar cole\u00e7\u00e3o</span>";
         }
       });
   }
@@ -515,7 +514,8 @@
       selectEl.addEventListener("change", function () {
         var opt = selectEl.options[selectEl.selectedIndex];
         var newId = selectEl.value;
-        var newName = opt && newId ? opt.textContent.replace(/\s*\(\d+ cards\)$/, "") : "";
+        var newName =
+          opt && newId ? opt.textContent.replace(/\s*\(\d+ cards\)$/, "") : "";
         if (newId) {
           loadAndCompare(newId, newName);
         } else {
@@ -606,7 +606,9 @@
 
       var noneOpt = document.createElement("option");
       noneOpt.value = "";
-      noneOpt.textContent = selectedId ? "Nenhuma (desativado)" : "Selecione uma cole\u00e7\u00e3o...";
+      noneOpt.textContent = selectedId
+        ? "Nenhuma (desativado)"
+        : "Selecione uma cole\u00e7\u00e3o...";
       select.appendChild(noneOpt);
 
       collections.forEach(function (col) {
@@ -728,7 +730,8 @@
       selectEl.addEventListener("change", function () {
         var opt = selectEl.options[selectEl.selectedIndex];
         var newId = selectEl.value;
-        var newName = opt && newId ? opt.textContent.replace(/\s*\(\d+ cards\)$/, "") : "";
+        var newName =
+          opt && newId ? opt.textContent.replace(/\s*\(\d+ cards\)$/, "") : "";
         if (newId) {
           loadAndCompare(newId, newName);
         } else {
@@ -855,8 +858,7 @@
     var changed = false;
     if (newConfig.le_consider_qty !== _state.config.le_consider_qty)
       changed = true;
-    if (newConfig.le_match_mode !== _state.config.le_match_mode)
-      changed = true;
+    if (newConfig.le_match_mode !== _state.config.le_match_mode) changed = true;
 
     if (changed) {
       _state.config = newConfig;
