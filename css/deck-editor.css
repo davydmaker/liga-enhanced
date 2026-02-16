@@ -440,6 +440,7 @@ a.le-dk-added-name:hover {
 .le-col-buy-btn { padding: 6px 14px; border: 1px solid #ff6a10; border-radius: 5px; background: #fff; color: #ff6a10; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; transition: all 0.15s; }
 .le-col-buy-btn:hover { background: #ff6a10; color: #fff; }
 .le-col-buy-btn.le-col-buy-copied { background: #28a745; border-color: #28a745; color: #fff; }
+.le-col-buttons { display: flex; gap: 6px; flex-shrink: 0; }
 .le-col-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; margin-right: 5px; flex-shrink: 0; }
 .le-col-owned { background: #28a745; }
 .le-col-missing { background: #dc3545; }

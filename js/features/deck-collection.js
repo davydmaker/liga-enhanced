@@ -690,6 +690,15 @@
       viewLink +
       "</div>";
 
+    var buttonsHtml = "";
+    if (missing > 0) {
+      buttonsHtml =
+        '<div class="le-col-buttons">' +
+        '<button class="le-col-buy-btn" id="le-col-buy-btn">Copiar Faltantes</button>' +
+        '<button class="le-col-buy-btn" id="le-col-buylist-btn">Comprar por Lista</button>' +
+        "</div>";
+    }
+
     banner.innerHTML =
       '<div class="le-col-banner-info">' +
       selectorHtml +
@@ -709,9 +718,7 @@
       legendHtml +
       settingsHtml +
       "</div>" +
-      (missing > 0
-        ? '<button class="le-col-buy-btn" id="le-col-buy-btn">Copiar Faltantes</button>'
-        : "");
+      buttonsHtml;
 
     insertBanner(banner);
     populateCollectionSelect(collectionId);
@@ -777,6 +784,27 @@
               buyBtn.classList.remove("le-col-buy-copied");
             }, 2000);
           });
+        });
+      }
+
+      var buyListBtn = document.getElementById("le-col-buylist-btn");
+      if (buyListBtn) {
+        buyListBtn.addEventListener("click", function () {
+          var text = missingList
+            .map(function (m) {
+              var line = m.qty + " " + m.name;
+              if (useEdition && m.editionCode)
+                line += " [edicao=" + m.editionCode.toLowerCase() + "]";
+              return line;
+            })
+            .join("\n");
+
+          try {
+            localStorage.setItem("le_buy_list", text);
+          } catch (e) {
+            /* ignore */
+          }
+          window.open("/?view=cards/lista&listaCompra=1", "_blank");
         });
       }
     }
@@ -878,4 +906,46 @@
     canHandle: canHandle,
     init: init,
   });
+
+  // ─── Auto-fill Compra por Lista ───
+
+  function tryAutoFillBuyList() {
+    var pending = localStorage.getItem("le_buy_list");
+    if (!pending) return;
+    if (location.search.indexOf("view=cards/lista") === -1) return;
+
+    var modalDismissed = false;
+    var attempts = 0;
+    var timer = setInterval(function () {
+      attempts++;
+
+      if (!modalDismissed) {
+        var modal = document.getElementById("popup-cards-from-storage");
+        if (modal && modal.offsetParent !== null) {
+          var buttons = modal.querySelectorAll("input[type='button']");
+          for (var i = 0; i < buttons.length; i++) {
+            if (buttons[i].value === "Ignorar Lista") {
+              buttons[i].click();
+              modalDismissed = true;
+              break;
+            }
+          }
+          return;
+        }
+      }
+
+      var textarea = document.getElementById("card_list");
+      if (textarea) {
+        clearInterval(timer);
+        textarea.value = pending;
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
+        localStorage.removeItem("le_buy_list");
+      } else if (attempts >= 50) {
+        clearInterval(timer);
+        localStorage.removeItem("le_buy_list");
+      }
+    }, 200);
+  }
+
+  tryAutoFillBuyList();
 })();
