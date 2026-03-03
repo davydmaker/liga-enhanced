@@ -26,6 +26,7 @@ Liga Enhanced é uma extensão para Chrome que adiciona funcionalidades e melhor
 | **Filtros Aprimorados** | Filtros do marketplace remodelados com visual moderno e melhor usabilidade. Funciona nas páginas de busca, edições, bazar e showcase. |
 | **Editor de Deck Inline** | Edite cartas, quantidades e edições diretamente na página do deck, sem precisar navegar para formulários separados. |
 | **Comparação Deck vs Coleção** | Compare as cartas de qualquer deck com sua coleção pessoal. Indicadores visuais mostram o que você possui, o que falta, e inclui atalho para comprar as faltantes via Compra por Lista. |
+| **Ocultar Cartas** | Oculte cartas indesejadas de todos os resultados de busca. Funciona no marketplace, bazar, showcase e na busca principal. As cartas ocultas ficam salvas e podem ser gerenciadas pela página da extensão. |
 
 ## Instalação
 
