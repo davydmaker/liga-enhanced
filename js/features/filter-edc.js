@@ -9,10 +9,23 @@
   const ui = LE.ui;
   const C = LE.constants;
 
-  let allCards = [];
+  let fullCards = [];   // complete list including blocked cards
+  let allCards = [];    // fullCards minus blocked cards
   let filteredCards = [];
   let activeFilters = { search: "", iR: [], iC: [], iT: [], sA: [], iCMC: [] };
   let filtersConfig = {};
+
+  function getBlockedNames() {
+    try {
+      return JSON.parse(localStorage.getItem("le_blocked_cards")) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function normalizeCardName(str) {
+    return (str || "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
 
   // ─── Detection ───
 
@@ -153,9 +166,9 @@
     html +=
       '<div class="le-results-bar"><span id="le-results-count">' +
       allCards.length +
-      "</span> / " +
+      '</span> / <span id="le-total-count">' +
       allCards.length +
-      ' cards <button id="le-clear-all" class="le-clear-btn" style="display:none;">Limpar</button></div>';
+      '</span> cards <button id="le-clear-all" class="le-clear-btn" style="display:none;">Limpar</button></div>';
 
     for (const key of ["iR", "iC", "iT"]) {
       if (filtersConfig[key])
@@ -509,6 +522,27 @@
     });
   }
 
+  // ─── Blocking Change Handler ───
+
+  function recomputeAfterBlockingChange() {
+    const blocked = getBlockedNames();
+    allCards = blocked.length > 0
+      ? fullCards.filter((c) => blocked.indexOf(normalizeCardName(c.nEN)) === -1)
+      : [...fullCards];
+
+    // Re-apply active filters on top of new allCards
+    if (hasActive()) {
+      applyFilters();
+    } else {
+      filteredCards = [...allCards];
+      updateGrid();
+      updateCounts();
+    }
+
+    const totalEl = document.getElementById("le-total-count");
+    if (totalEl) totalEl.textContent = allCards.length;
+  }
+
   // ─── Register Module ───
 
   LE.registerModule({
@@ -517,12 +551,18 @@
     init: function () {
       const cards = findCards();
       if (!cards) return;
-      allCards = [...cards];
-      filteredCards = [...cards];
+      fullCards = [...cards];
+      const blocked = getBlockedNames();
+      allCards = blocked.length > 0
+        ? fullCards.filter((c) => blocked.indexOf(normalizeCardName(c.nEN)) === -1)
+        : [...fullCards];
+      filteredCards = [...allCards];
       extractFilterOptions();
       ui.createFloatingButton();
       const panel = ui.createPanelShell(buildHTML());
       bindEvents(panel);
+
+      document.addEventListener("le-blocked-changed", recomputeAfterBlockingChange);
     },
   });
 })();

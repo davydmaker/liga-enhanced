@@ -504,3 +504,147 @@
 .le-artist-list::-webkit-scrollbar-thumb:hover {
   background: #bbb;
 }
+
+/* Block Card Button */
+.le-block-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+  padding: 0;
+}
+
+.le-block-btn:hover {
+  background: rgba(220, 50, 50, 0.85);
+}
+
+.le-block-btn-left {
+  right: auto;
+  left: 4px;
+}
+
+/* Inline Block Button (showcase vitrine — inside .name flex row) */
+.le-block-btn-inline {
+  position: relative;
+  z-index: 10;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-left: 6px;
+  opacity: 0.75;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.le-block-btn-inline:hover {
+  opacity: 1;
+  background: #ff6a10;
+  color: #fff;
+}
+
+/* Card Detail - Blocked Banner */
+.le-mpcard-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  margin: 0 0 16px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+}
+
+.le-mpcard-banner-blocked {
+  background: #fff3e0;
+  border: 1px solid #ffcc80;
+  color: #e65100;
+}
+
+.le-mpcard-banner-normal {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #555;
+}
+
+.le-mpcard-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.le-mpcard-banner-text svg {
+  flex-shrink: 0;
+}
+
+.le-mpcard-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.le-mpcard-btn-unblock {
+  border-color: #ff6a10;
+  background: #ff6a10;
+  color: #fff;
+}
+
+.le-mpcard-btn-unblock:hover {
+  background: #e05500;
+  border-color: #e05500;
+}
+
+.le-mpcard-btn-block {
+  border-color: #ddd;
+  background: #fff;
+  color: #666;
+}
+
+.le-mpcard-btn-block:hover {
+  border-color: #ff6a10;
+  color: #ff6a10;
+}
+
+.mtg-single:hover .le-block-btn,
+.imagem:hover .le-block-btn,
+.head:hover .le-block-btn,
+.c-name:hover .le-block-btn,
+.card-item:hover .le-block-btn,
+figure:hover > .le-block-btn,
+.flip-img:hover > .le-block-btn,
+*:hover > .le-block-btn {
+  opacity: 1;
+}
+
+.head:hover .le-block-btn-inline,
+.c-name:hover .le-block-btn-inline {
+  opacity: 0.7;
+}

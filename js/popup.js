@@ -21,4 +21,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     banner.style.display = "";
     features.style.display = "none";
   }
+
+  // Blocked cards count
+  const countEl = document.getElementById("blocked-count");
+  chrome.storage.local.get({ le_blocked_cards: "[]" }, (data) => {
+    try {
+      const list = JSON.parse(data.le_blocked_cards || "[]");
+      if (list.length > 0) countEl.textContent = list.length;
+    } catch (e) {}
+  });
+
+  // Open blocked cards page
+  document.getElementById("blocked-cards-row").addEventListener("click", () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL("blocked-cards.html") });
+  });
 });
