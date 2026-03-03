@@ -1,5 +1,4 @@
-// Liga Enhanced - Bridge (ISOLATED world)
-// Bidirectional sync between chrome.storage and localStorage
+// Bridge (ISOLATED world): syncs chrome.storage ↔ localStorage
 (function () {
   "use strict";
 
@@ -19,7 +18,7 @@
     le_consider_qty: true,
   };
 
-  // ─── Config sync (chrome.storage.sync ↔ localStorage) ───
+  // ─── Config sync ───
 
   function syncConfigToLocal() {
     chrome.storage.sync.get(DEFAULTS, function (data) {
@@ -51,7 +50,7 @@
     }
   });
 
-  // ─── Blocked cards sync (chrome.storage.local ↔ localStorage) ───
+  // ─── Blocked cards sync ───
 
   function syncBlockedToLocal() {
     chrome.storage.local.get({ le_blocked_cards: "[]" }, function (data) {
@@ -79,7 +78,7 @@
     }
   });
 
-  // ─── Blocked images sync (chrome.storage.local ↔ localStorage) ───
+  // ─── Blocked images sync ───
 
   function syncBlockedImgsToLocal() {
     chrome.storage.local.get({ le_blocked_imgs: "{}" }, function (data) {
@@ -102,7 +101,7 @@
     }
   });
 
-  // ─── Listen for storage changes ───
+  // ─── Storage changes ───
 
   chrome.storage.onChanged.addListener(function (changes, area) {
     if (area === "sync") syncConfigToLocal();

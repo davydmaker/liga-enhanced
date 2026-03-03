@@ -1,5 +1,3 @@
-// Liga Enhanced - BZR Filter Module
-// UI wrapper for bazar seller pages — delegates filtering to native bzr system (server-side)
 (function () {
   "use strict";
 
@@ -33,7 +31,6 @@
       if (!titleEl) return;
       var title = titleEl.textContent.trim();
 
-      // Get groupKey from native "Limpar Filtros" onclick
       var clearEl = section.querySelector(".filtro-limpar");
       var groupKey = "";
       if (clearEl) {
@@ -53,7 +50,6 @@
           ? parseInt(countEl.textContent.replace(/[()]/g, "")) || 0
           : 0;
 
-        // Build display label (strip count prefix from native label)
         var rawLabel = labelEl.textContent.trim().replace(/^\(\d+\)\s*/, "");
 
         var qualMatch = cb.id.match(/^filtro_qualid_(\d+)$/);
@@ -91,7 +87,6 @@
     html +=
       '<div class="le-results-bar"><button id="le-clear-all" class="le-clear-btn" style="display:none;">Limpar Filtros</button></div>';
 
-    // Name search (client-side show/hide on visible cards)
     html +=
       '<div class="le-section"><div class="le-section-title">Busca por Nome</div>';
     html +=
@@ -172,7 +167,6 @@
   // ─── Bind Events ───
 
   function bindEvents(panel) {
-    // Chip clicks → toggle native checkbox → bzr.selectFilter
     panel.querySelectorAll(".le-bzr-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         var nativeId = chip.dataset.nativeId;
@@ -185,7 +179,6 @@
       });
     });
 
-    // List checkboxes → toggle native → bzr.selectFilter
     panel.querySelectorAll(".le-bzr-cb").forEach(function (cb) {
       cb.addEventListener("change", function () {
         var nativeId = cb.dataset.nativeId;
@@ -201,7 +194,6 @@
 
     ui.bindListSearch(panel);
 
-    // Name search (client-side)
     var nameInput = panel.querySelector("#le-name-search");
     var nameTimer;
     if (nameInput) {
@@ -219,7 +211,7 @@
     if (clearBtn) clearBtn.addEventListener("click", clearAll);
   }
 
-  // ─── Name Search (client-side show/hide) ───
+  // ─── Name Search ───
 
   function applyNameSearch() {
     var container = document.getElementById("card-estoque");
@@ -365,7 +357,6 @@
   // ─── Hook Native bzr Methods ───
 
   function hookBzr() {
-    // Hook putFilter to update our panel counts when server responds
     if (typeof bzr.putFilter === "function") {
       var origPut = bzr.putFilter;
       bzr.putFilter = function (filterId, group, inputName, count, selected) {
@@ -391,7 +382,6 @@
       };
     }
 
-    // Hook selectFilter to sync when native sidebar checkboxes are used directly
     if (typeof bzr.selectFilter === "function") {
       var origSelect = bzr.selectFilter;
       bzr.selectFilter = function () {
@@ -401,7 +391,6 @@
       };
     }
 
-    // Hook removeFilters to sync when native "Limpar Filtros" is clicked
     if (typeof bzr.removeFilters === "function") {
       var origRemove = bzr.removeFilters;
       bzr.removeFilters = function () {

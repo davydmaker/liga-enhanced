@@ -1,5 +1,3 @@
-// Liga Enhanced - Filter Core
-// Shared UI components, module registry, and bootstrap logic
 (function () {
   "use strict";
 
@@ -174,7 +172,7 @@
     });
   }
 
-  // ─── Shared Native Delegation Helpers (bzr/showcase) ───
+  // ─── Shared Native Delegation Helpers ───
 
   function syncNativeState(chipSelector, cbSelector) {
     var panel = document.getElementById("le-panel");

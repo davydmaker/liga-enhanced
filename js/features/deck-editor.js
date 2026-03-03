@@ -1,5 +1,3 @@
-// Liga Enhanced - Deck Editor Module
-// Inline deck editing on the view page
 (function () {
   "use strict";
 

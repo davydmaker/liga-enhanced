@@ -1,5 +1,3 @@
-// Liga Enhanced - Showcase Filter Module
-// UI wrapper for store showcase/vitrine pages — delegates filtering to native showcase system (server-side)
 (function () {
   "use strict";
 
@@ -34,7 +32,6 @@
     if (!container) return groups;
 
     container.querySelectorAll(".group-filter").forEach(function (section) {
-      // Group index from id="group-0", "group-1", etc.
       var idMatch = (section.id || "").match(/^group-(\d+)$/);
       if (!idMatch) return;
       var groupIdx = parseInt(idMatch[1]);
@@ -45,7 +42,6 @@
           titleEl.textContent.trim().replace(/^\d+\s*/, "")
         : "Grupo " + groupIdx;
 
-      // Get filter type from the clear button onclick (.clean-filter)
       var filterType = "";
       var clearEl = section.querySelector(".clean-filter");
       if (clearEl) {
@@ -62,7 +58,6 @@
         var cb = optEl.querySelector('input[type="checkbox"]');
         if (!cb) return;
 
-        // Extract optionIndex and value from onclick
         var onclick = cb.getAttribute("onclick") || "";
         var searchMatch = onclick.match(
           /showcase\.search\(this\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'([^']+)'\s*,\s*'([^']+)'\s*\)/,
@@ -73,13 +68,11 @@
         var type = searchMatch[3];
         var value = searchMatch[4];
 
-        // Label from span
         var labelEl = optEl.querySelector("span");
         var rawLabel = labelEl
           ? labelEl.textContent.trim()
           : "Option " + optIdx;
 
-        // Override quality labels only for card quality (has abbreviations like "(M)", "(NM)")
         if (
           type === "quality" &&
           QUALITY_LABELS[parseInt(value)] &&
@@ -93,7 +86,6 @@
           icon = C.COLOR_ICON[parseInt(value)];
         }
 
-        // Hidden state (behind "show more")
         var hidden = optEl.classList.contains("filter-hide-limit");
 
         options.push({
@@ -210,7 +202,6 @@
   // ─── Bind Events ───
 
   function bindEvents(panel) {
-    // Chip clicks → toggle native checkbox → showcase.search
     panel.querySelectorAll(".le-sc-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         var nativeId = chip.dataset.nativeId;
@@ -229,7 +220,6 @@
       });
     });
 
-    // List checkboxes → toggle native → showcase.search
     panel.querySelectorAll(".le-sc-cb").forEach(function (cb) {
       cb.addEventListener("change", function () {
         var nativeId = cb.dataset.nativeId;
@@ -372,7 +362,6 @@
   // ─── Hook Native Showcase Methods ───
 
   function hookShowcase() {
-    // Hook search to sync when native sidebar checkboxes are used directly
     if (typeof showcase.search === "function") {
       var origSearch = showcase.search;
       showcase.search = function () {
@@ -382,7 +371,6 @@
       };
     }
 
-    // Hook filtersClear to sync when native clear is clicked
     if (typeof showcase.filtersClear === "function") {
       var origClear = showcase.filtersClear;
       showcase.filtersClear = function () {

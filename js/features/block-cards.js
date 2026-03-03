@@ -1,5 +1,3 @@
-// Liga Enhanced - Block Cards Module
-// Hides blocked cards from all search/listing pages
 (function () {
   "use strict";
 
@@ -9,7 +7,7 @@
   var STORAGE_KEY = "le_blocked_cards";
   var IMGS_KEY = "le_blocked_imgs";
 
-  // ─── Anti-flash: hide new cards until processed ───
+  // ─── Anti-flash ───
 
   function injectAntiFlashCSS() {
     var blocked = getBlockedCards();
@@ -177,10 +175,9 @@
       var mtgText = mtgAux.textContent.trim();
       if (mtgText) return mtgText;
     }
-    // href always has the EN name in the card= parameter
     var link = card.querySelector("a[href*='card=']");
     if (link) return extractNameFromHref(link.getAttribute("href"));
-    // Fallback: .cut-name (EN when there's no PT translation)
+    // .cut-name has EN name only when there's no PT translation
     var cutName = card.querySelector(".cut-name");
     if (cutName) {
       var text = cutName.textContent.trim();
@@ -190,7 +187,6 @@
   }
 
   function getCardImgUrl(card) {
-    // Showcase (vitrine): image is in .image img (not wrapped in a card link)
     var showcaseImg = card.querySelector(".image img[data-src]");
     if (showcaseImg) return showcaseImg.getAttribute("data-src");
     var img = card.querySelector("a[href*='card='] img[data-src]");
@@ -204,13 +200,11 @@
   }
 
   function findImageContainer(card) {
-    // Try specific containers first
     var c =
       card.querySelector(".imagem") ||
       card.querySelector(".mtg-picture") ||
       card.querySelector(".card-item");
     if (c) return c;
-    // Generic: parent of first card-link image
     var img = card.querySelector("a[href*='card='] img");
     if (img) {
       var link = img.closest("a");
@@ -245,7 +239,7 @@
     return btn;
   }
 
-  // ─── EDC Blocking (data-level filtering + DOM button injection) ───
+  // ─── EDC Blocking ───
 
   var _edcOrigReloadExec = null;
 
@@ -253,8 +247,7 @@
     if (typeof edc === "undefined" || typeof edc.reloadExec !== "function")
       return;
 
-    // Hook isFetched: blocked cards are excluded from every search/filter/scroll operation.
-    // This is the primary filter — edc.obj is never modified.
+    // Hook isFetched to filter blocked cards without modifying edc.obj
     var origIsFetched = edc.isFetched;
     edc.isFetched = function (card) {
       var name = normalizeName((card && card.nEN) || "");
@@ -262,15 +255,12 @@
       return origIsFetched.apply(this, arguments);
     };
 
-    // Hook reloadExec: after sort/reload the grid is rebuilt, re-inject buttons.
     _edcOrigReloadExec = edc.reloadExec;
     edc.reloadExec = function () {
       _edcOrigReloadExec.apply(this, arguments);
       injectEdcBlockButtons();
     };
 
-    // Initial state: edc.init() already ran (document_idle fires after it), so cards
-    // are in the DOM but no search has run yet. Hide blocked cards directly.
     hideBlockedEdcDomCards();
     injectEdcBlockButtons();
   }
@@ -303,23 +293,20 @@
   }
 
   function getEdcCardNameEN(cardEl) {
-    // Try invisible-label (has "<b>PT Name</b><br/>EN Name" or "<b>EN Name</b>")
+    // invisible-label format: "<b>PT Name</b><br/>EN Name"
     var label = cardEl.querySelector(".invisible-label");
     if (label) {
       var html = label.innerHTML;
       var parts = html.split(/<br\s*\/?>/i);
       if (parts.length >= 2) {
-        // Second part is the EN name
         var tmp = document.createElement("span");
         tmp.innerHTML = parts[1];
         var en = tmp.textContent.trim();
         if (en) return en;
       }
     }
-    // Fallback to link href
     var link = cardEl.querySelector("a[href*='card=']");
     if (link) return extractNameFromHref(link.getAttribute("href"));
-    // Fallback to edc.obj matching by item id
     var itemId = cardEl.id;
     if (itemId && typeof edc !== "undefined" && Array.isArray(edc.obj)) {
       var key = itemId.replace("item_", "");
@@ -336,7 +323,6 @@
 
     var cards = grid.querySelectorAll(".card-item");
     if (cards.length === 0) {
-      // Fallback: direct children that have data-tooltip
       cards = grid.querySelectorAll(":scope > [data-tooltip]");
     }
     if (cards.length === 0) {
@@ -359,7 +345,6 @@
       });
       btn.classList.add("le-block-btn-left");
 
-      // Find image container: figure, .main-link-card parent, or fallback
       var figure = cardEl.querySelector("figure");
       if (!figure) figure = cardEl.querySelector(".flip-img");
       if (!figure) {
@@ -480,7 +465,6 @@
   function getShowcaseCards() {
     var container = getShowcaseContainer();
     if (!container) return [];
-    // Use .container-single-card if available (vitrine); fallback to direct children
     var cards = Array.from(container.querySelectorAll(":scope > .container-single-card"));
     if (cards.length === 0) {
       cards = Array.from(container.querySelectorAll(":scope > div"));
@@ -518,13 +502,7 @@
       });
       btn.className = "le-block-btn-inline";
 
-      // Showcase (vitrine) structure:
-      //   .container-single-card > .container-card-data > .image-and-name (dark area)
-      //     .image / .container-name > .name (flex row)
-      //       .cut-name "Card Name"  +  <a target="_blank"> ↗  +  [button here]
-      // Inserting inside .name keeps the button on the same flex row as the
-      // card name and ↗ icon, so it doesn't expand the dark area height.
-      // Fallback: classic bazar structure uses .head.
+      // Target .name (flex row) to keep button inline with card name and ↗ icon
       var target =
         card.querySelector(".name") ||
         card.querySelector(".container-name") ||
@@ -624,7 +602,7 @@
     injectMarketplaceBlockButtons();
   }
 
-  // ─── Mpcard Banner (card detail page) ───
+  // ─── Mpcard Banner ───
 
   var _mpcardNameEN = "";
   var _mpcardBanner = null;
@@ -656,7 +634,6 @@
     _mpcardBanner.className = "le-mpcard-banner";
     renderBannerState(nameEN, isBlocked);
 
-    // Find insertion point: before the card info block
     var ref =
       document.querySelector(".container-item-info") ||
       document.getElementById("marketplace-stores") ||
@@ -720,7 +697,7 @@
     renderBannerState(_mpcardNameEN, isBlocked);
   }
 
-  // ─── Listen for external unblock (from management page via bridge) ───
+  // ─── Blocked Changed ───
 
   function onBlockedChanged() {
     if (_pageType === "edc") {

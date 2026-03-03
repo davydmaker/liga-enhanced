@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     features.style.display = "none";
   }
 
-  // Blocked cards count
   const countEl = document.getElementById("blocked-count");
   chrome.storage.local.get({ le_blocked_cards: "[]" }, (data) => {
     try {
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {}
   });
 
-  // Open blocked cards page
   document.getElementById("blocked-cards-row").addEventListener("click", () => {
     chrome.tabs.create({ url: chrome.runtime.getURL("blocked-cards.html") });
   });

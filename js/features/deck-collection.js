@@ -1,4 +1,3 @@
-// Liga Enhanced - Deck Collection Comparison
 (function () {
   "use strict";
 

@@ -1,5 +1,3 @@
-// Liga Enhanced - MPCARD Filter Module
-// Filters for marketplace, buylist, bazar card detail pages (mpcard/screenfilter)
 (function () {
   "use strict";
 
@@ -204,7 +202,6 @@
         const ref = parseFloat(item.lj_ref);
         if (ref >= 1 && ref <= 5) item._refAvg = item.lj_ref;
       }
-      // Reference count (bazar pages: lj_ref is review count, not rating)
       item._refCount =
         item.lj_ref !== undefined && item.lj_ref !== null
           ? Number(item.lj_ref)
@@ -214,7 +211,6 @@
           ? Number(item.quantFilter)
           : 1;
 
-      // Buylist: extract accepted qualities/languages from q/l objects
       if (isBuylist) {
         item._qualities = item.q ? Object.keys(item.q) : [];
         item._languages = item.l ? Object.keys(item.l) : [];
@@ -222,7 +218,7 @@
     });
   }
 
-  // ─── Detect mpline prefix ───
+  // ─── Mpline Prefix ───
 
   function detectMplinePrefix() {
     const container = document.getElementById("marketplace-stores");
@@ -305,7 +301,6 @@
       }
     }
 
-    // Extras (not available on product pages)
     if (!isProduct) {
       const extraRaw = allStock.map((s) =>
         s.extras === undefined || s.extras === null ? 0 : s.extras,
@@ -370,8 +365,6 @@
       };
     }
 
-    // --- Store filters ---
-
     const ufVals = [
       ...new Set(allStock.map((s) => s.lj_uf).filter((v) => v && v.trim())),
     ].sort();
@@ -386,7 +379,6 @@
       };
     }
 
-    // Tipo de Loja (skip on bazar pages where there are no stores)
     const hasStores = Object.keys(initStores).length > 0;
     if (hasStores) {
       const tipoOptions = [];
@@ -504,7 +496,7 @@
       };
     }
 
-    // Quantidade — modulo comparison like native screenfilter
+    // Modulo comparison like native screenfilter
     const quantThresholds = [4, 3, 2];
     const quantOptions = [];
     for (const q of quantThresholds) {

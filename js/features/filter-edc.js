@@ -1,5 +1,3 @@
-// Liga Enhanced - EDC Filter Module
-// Filters for edition/set card grid pages (edc object)
 (function () {
   "use strict";
 
@@ -530,7 +528,6 @@
       ? fullCards.filter((c) => blocked.indexOf(normalizeCardName(c.nEN)) === -1)
       : [...fullCards];
 
-    // Re-apply active filters on top of new allCards
     if (hasActive()) {
       applyFilters();
     } else {

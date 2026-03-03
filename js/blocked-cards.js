@@ -1,4 +1,3 @@
-// Liga Enhanced - Blocked Cards Management Page
 (function () {
   "use strict";
 
