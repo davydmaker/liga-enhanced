@@ -4,6 +4,7 @@
   var LE = window.LigaEnhanced;
   if (!LE) return;
 
+  var utils = LE.utils;
   var STORAGE_KEY = "le_blocked_cards";
   var IMGS_KEY = "le_blocked_imgs";
 
@@ -28,16 +29,13 @@
   // ─── Storage ───
 
   function getBlockedCards() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch (e) {
-      return [];
-    }
+    return utils.getBlockedCards();
   }
 
   function saveBlockedCards(list) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      utils.invalidateBlockedCache();
     } catch (e) {
       /* ignore */
     }
@@ -69,9 +67,7 @@
     }
   }
 
-  function normalizeName(str) {
-    return str.toLowerCase().replace(/\s+/g, " ").trim();
-  }
+  var normalizeName = utils.normalizeName;
 
   function ensureHttps(url) {
     if (!url) return "";
@@ -110,16 +106,7 @@
     }
   }
 
-  function extractNameFromHref(href) {
-    if (!href) return "";
-    var match = href.match(/[?&]card=([^&]+)/);
-    if (!match) return "";
-    try {
-      return decodeURIComponent(match[1].replace(/\+/g, " "));
-    } catch (e) {
-      return match[1].replace(/\+/g, " ");
-    }
-  }
+  var extractNameFromHref = utils.extractNameFromHref;
 
   // ─── Detection ───
 
@@ -700,6 +687,7 @@
   // ─── Blocked Changed ───
 
   function onBlockedChanged() {
+    utils.invalidateBlockedCache();
     if (_pageType === "edc") {
       applyEdcBlocking();
     } else if (_pageType === "bzr") {

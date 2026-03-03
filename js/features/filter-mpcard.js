@@ -1173,11 +1173,13 @@
       const panel = ui.createPanelShell(buildHTML());
       bindEvents(panel);
 
+      let renderAttempts = 0;
       const waitForRender = () => {
+        renderAttempts++;
         const container = document.getElementById("marketplace-stores");
         if (container && container.children.length > 0) {
           detectMplinePrefix();
-        } else {
+        } else if (renderAttempts < 60) {
           setTimeout(waitForRender, 500);
         }
       };

@@ -6,24 +6,14 @@
 
   const ui = LE.ui;
   const C = LE.constants;
+  const normalizeCardName = LE.utils.normalizeName;
+  const getBlockedNames = LE.utils.getBlockedCards;
 
   let fullCards = [];   // complete list including blocked cards
   let allCards = [];    // fullCards minus blocked cards
   let filteredCards = [];
   let activeFilters = { search: "", iR: [], iC: [], iT: [], sA: [], iCMC: [] };
   let filtersConfig = {};
-
-  function getBlockedNames() {
-    try {
-      return JSON.parse(localStorage.getItem("le_blocked_cards")) || [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function normalizeCardName(str) {
-    return (str || "").toLowerCase().replace(/\s+/g, " ").trim();
-  }
 
   // ─── Detection ───
 

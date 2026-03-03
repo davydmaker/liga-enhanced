@@ -25,11 +25,7 @@
 
   // ─── Utilities ───
 
-  function escapeHtml(str) {
-    var div = document.createElement("div");
-    div.textContent = str;
-    return div.innerHTML;
-  }
+  var escapeHtml = LE.utils.escapeHtml;
 
   function escapeAttr(str) {
     return str

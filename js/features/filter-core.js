@@ -202,6 +202,57 @@
     if (clearBtn) clearBtn.style.display = hasActive ? "inline-block" : "none";
   }
 
+  // ─── Shared Utils ───
+
+  function normalizeName(str) {
+    return (str || "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  function extractNameFromHref(href) {
+    if (!href) return "";
+    var match = href.match(/[?&]card=([^&]+)/);
+    if (!match) return "";
+    try {
+      return decodeURIComponent(match[1].replace(/\+/g, " "));
+    } catch (e) {
+      return match[1].replace(/\+/g, " ");
+    }
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  var _blockedCardsCache = null;
+  var _blockedCacheRaw = null;
+
+  function getBlockedCards() {
+    try {
+      var raw = localStorage.getItem("le_blocked_cards");
+      if (raw === _blockedCacheRaw && _blockedCardsCache) return _blockedCardsCache;
+      _blockedCacheRaw = raw;
+      _blockedCardsCache = JSON.parse(raw) || [];
+      return _blockedCardsCache;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function invalidateBlockedCache() {
+    _blockedCacheRaw = null;
+    _blockedCardsCache = null;
+  }
+
+  window.LigaEnhanced.utils = {
+    normalizeName: normalizeName,
+    extractNameFromHref: extractNameFromHref,
+    escapeHtml: escapeHtml,
+    getBlockedCards: getBlockedCards,
+    invalidateBlockedCache: invalidateBlockedCache,
+  };
+
   // ─── Expose Shared UI ───
 
   window.LigaEnhanced.ui = {

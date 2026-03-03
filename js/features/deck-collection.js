@@ -56,19 +56,10 @@
 
   // ─── Name Normalization ───
 
-  function normalizeName(str) {
-    return str.toLowerCase().replace(/\s+/g, " ").trim();
-  }
+  var normalizeName = LE.utils.normalizeName;
 
   function extractCardNameFromUrl(href) {
-    if (!href) return "";
-    var match = href.match(/[?&]card=([^&]+)/);
-    if (!match) return "";
-    try {
-      return normalizeName(decodeURIComponent(match[1]));
-    } catch (e) {
-      return normalizeName(match[1]);
-    }
+    return normalizeName(LE.utils.extractNameFromHref(href));
   }
 
   // ─── Parse Deck Cards from DOM ───
@@ -842,11 +833,7 @@
     return Promise.resolve();
   }
 
-  function escapeHtml(str) {
-    var div = document.createElement("div");
-    div.textContent = str;
-    return div.innerHTML;
-  }
+  var escapeHtml = LE.utils.escapeHtml;
 
   // ─── Bidirectional Sync ───
 
